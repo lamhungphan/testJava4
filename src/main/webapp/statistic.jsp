@@ -1,22 +1,25 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Statistic</title>
+    <title>Statistics</title>
 </head>
 <body>
-<h2>Number of Products in Category</h2><br>
+<h2>Product Statistics</h2><br>
 <table border="1">
     <thead>
     <tr>
-        <th>Category Name</th>
-        <th>Number of Products</th>
+        <th>Category</th>
+        <th>Number of Product</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td></td>
-        <td></td>
-    </tr>
+    <c:forEach var="stat" items="${statistics}">
+        <tr>
+            <td>${stat.categoryName}</td>
+            <td>${stat.productCount}</td>
+        </tr>
+    </c:forEach>
     </tbody>
 </table>
 </body>

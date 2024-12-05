@@ -13,6 +13,10 @@ public interface ProductDao {
 
     public Product update(Product entity);
 
-    public Product delete(String id);
+    public Product delete(Integer id);
+
     public Integer countByCategory(String id);
+
+    public Long countAll();
+    public List<Product> getProductsByCategory(String categoryId);
 }

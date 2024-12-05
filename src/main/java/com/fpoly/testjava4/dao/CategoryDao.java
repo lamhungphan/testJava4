@@ -4,14 +4,14 @@ import com.fpoly.testjava4.entity.Category;
 
 import java.util.List;
 
-public interface CategoryDao {
-    public Category findById(Integer id);
+ public interface CategoryDao {
+     Category findById(String id);
 
-    public List<Category> findAll();
+     List<Category> findAll();
 
-    public Category create(Category entity);
+     Category create(Category entity);
 
-    public Category update(Category entity);
+     Category update(Category entity);
 
-    public Category delete(String id);
+     Category delete(String id);
 }

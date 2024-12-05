@@ -4,6 +4,7 @@ import com.fpoly.testjava4.entity.Product;
 import com.fpoly.testjava4.entity.Product;
 import com.fpoly.testjava4.util.JpaUtil;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public Product delete(String id) {
+    public Product delete(Integer id) {
         try {
             entityManager.getTransaction().begin();
             Product product = entityManager.find(Product.class, id);
@@ -63,7 +64,6 @@ public class ProductDaoImpl implements ProductDao {
         }
     }
 
-    @Override
     public Integer countByCategory(String categoryId) {
         String jpql = "SELECT COUNT(p) FROM Product p WHERE p.category.id = :categoryId";
         return ((Long) entityManager.createQuery(jpql)
@@ -71,4 +71,17 @@ public class ProductDaoImpl implements ProductDao {
                 .getSingleResult()).intValue();
     }
 
+    @Override
+    public Long countAll() {
+        String jpql = "SELECT COUNT(p) FROM Product p";
+        return (Long) entityManager.createQuery(jpql).getSingleResult();
+    }
+
+    @Override
+    public List<Product> getProductsByCategory(String categoryId) {
+        String jpql = "SELECT p FROM Product p WHERE p.category.id = :categoryId";
+        TypedQuery<Product> query = entityManager.createQuery(jpql, Product.class);
+        query.setParameter("categoryId", categoryId);
+        return query.getResultList();
+    }
 }

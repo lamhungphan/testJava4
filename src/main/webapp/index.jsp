@@ -10,5 +10,7 @@
 <a href="${pageContext.request.contextPath}/category">Category</a>
 <a href="${pageContext.request.contextPath}/product">Product</a>
 <a href="${pageContext.request.contextPath}/statistic">Statistics</a>
+<hr>
+<jsp:include page="${view}"/>
 </body>
 </html>

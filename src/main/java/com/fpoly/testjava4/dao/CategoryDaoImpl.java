@@ -10,7 +10,7 @@ public class CategoryDaoImpl implements CategoryDao {
     EntityManager entityManager = JpaUtil.getEntityManager();
 
     @Override
-    public Category findById(Integer id) {
+    public Category findById(String id) {
         return entityManager.find(Category.class, id);
     }
 

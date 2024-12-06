@@ -1,6 +1,6 @@
-package com.fpoly.testjava4.dao;
+package com.fpoly.testjava4.dao.Impl;
 
-import com.fpoly.testjava4.entity.Product;
+import com.fpoly.testjava4.dao.ProductDao;
 import com.fpoly.testjava4.entity.Product;
 import com.fpoly.testjava4.util.JpaUtil;
 import jakarta.persistence.EntityManager;

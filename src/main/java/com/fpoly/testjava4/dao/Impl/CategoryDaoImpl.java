@@ -1,5 +1,6 @@
-package com.fpoly.testjava4.dao;
+package com.fpoly.testjava4.dao.Impl;
 
+import com.fpoly.testjava4.dao.CategoryDao;
 import com.fpoly.testjava4.entity.Category;
 import com.fpoly.testjava4.util.JpaUtil;
 import jakarta.persistence.EntityManager;

@@ -18,5 +18,6 @@ public interface ProductDao {
     public Integer countByCategory(String id);
 
     public Long countAll();
+
     public List<Product> getProductsByCategory(String categoryId);
 }

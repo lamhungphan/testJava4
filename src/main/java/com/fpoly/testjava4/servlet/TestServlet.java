@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fpoly.testjava4.dao.CategoryDaoImpl;
-import com.fpoly.testjava4.dao.ProductDaoImpl;
+import com.fpoly.testjava4.dao.Impl.CategoryDaoImpl;
+import com.fpoly.testjava4.dao.Impl.ProductDaoImpl;
 import com.fpoly.testjava4.entity.Category;
 import com.fpoly.testjava4.entity.Product;
 import jakarta.servlet.ServletException;
@@ -17,7 +17,7 @@ import jakarta.servlet.annotation.*;
 import com.fpoly.testjava4.dao.CategoryDao;
 import com.fpoly.testjava4.dao.ProductDao;
 
-@WebServlet({"/index", "/product", "/category", "/statistic"})
+@WebServlet({"/product", "/category", "/statistic"})
 public class TestServlet extends HttpServlet {
     public ProductDao productDao = new ProductDaoImpl();
     public CategoryDao categoryDao = new CategoryDaoImpl();
@@ -35,7 +35,7 @@ public class TestServlet extends HttpServlet {
                 doGetStatistic(request, response);
                 break;
             default:
-                request.getRequestDispatcher("/index.jsp").forward(request, response);
+                request.getRequestDispatcher(".jsp").forward(request, response);
                 break;
         }
     }
@@ -64,14 +64,14 @@ public class TestServlet extends HttpServlet {
         }
         request.setAttribute("products", products);
         request.setAttribute("view", "/product.jsp");
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+//        request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 
     public void doGetCategory(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         List<Category> categories = categoryDao.findAll();
         request.setAttribute("categories", categories);
         request.setAttribute("view", "/category.jsp");
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+//        request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 
     public void doGetStatistic(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -95,31 +95,27 @@ public class TestServlet extends HttpServlet {
 
         // Chuyển tiếp đến trang statistic.jsp
         request.setAttribute("view", "/statistic.jsp");
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+//        request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 
     private void doPostProduct(HttpServletRequest request, HttpServletResponse response, String action) throws ServletException, IOException {
         try {
-            switch (action.toLowerCase()) {
-                case "filter":
-                    // Lọc sản phẩm theo category
-                    String categoryFilterCode = request.getParameter("category_id");
-                    if (categoryFilterCode != null && !categoryFilterCode.trim().isEmpty() && !categoryFilterCode.equals("all")) {
-                        // Lọc sản phẩm theo category code
-                        List<Product> products = productDao.getProductsByCategory(categoryFilterCode);
-                        request.setAttribute("products", products);
-                    } else {
-                        List<Product> products = productDao.findAll();
-                        request.setAttribute("products", products);
-                    }
-                    break;
+            if (action.equalsIgnoreCase("filter")) { // Lọc sản phẩm theo category
+                String categoryFilterCode = request.getParameter("category_id");
+                if (categoryFilterCode != null && !categoryFilterCode.trim().isEmpty() && !categoryFilterCode.equals("all")) {
+                    // Lọc sản phẩm theo category code
+                    List<Product> products = productDao.getProductsByCategory(categoryFilterCode);
+                    request.setAttribute("products", products);
+                } else {
+                    List<Product> products = productDao.findAll();
+                    request.setAttribute("products", products);
+                }
             }
         } catch (Exception e) {
             request.setAttribute("message", "An error occurred: " + e.getMessage());
         }
         doGetProduct(request, response);
     }
-
 
     private void doPostCategory(HttpServletRequest request, HttpServletResponse response, String action) throws IOException, ServletException {
         try {
